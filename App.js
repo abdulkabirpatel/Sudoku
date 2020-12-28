@@ -1,6 +1,6 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, { Component,useState } from 'react';
 
 import {
   LayoutAnimation,
@@ -48,6 +48,8 @@ class Main extends Component {
     showModal: false,
     showRecord: false,
     showOnline: false,
+    moveLeft:3
+
   }
   puzzle = null
   solve = null
@@ -57,6 +59,7 @@ class Main extends Component {
   records = []
   granted = false
   nextPuzzle = null
+  
 
   handeleAppStateChange = (currentAppState) => {
     if (currentAppState != 'active') this.onShowModal();
@@ -81,7 +84,6 @@ class Main extends Component {
     });
     this.granted = await Store.get('granted');
   }
-
   componentWillUnmount() {
     AppState.removeEventListener('change', this.handeleAppStateChange);
   }
@@ -98,6 +100,7 @@ class Main extends Component {
     if (showOnline) {
       onlineHeight = CellSize / 3 + CellSize * (this.scores.length + 1);
     }
+   
     return (
       <View style={styles.container} >
         <View style={styles.header} >
@@ -105,6 +108,7 @@ class Main extends Component {
             <Image style={[styles.icon, initing && styles.disabled]} source={require('./app/images/menu.png')} />
           </Touchable>
           <Timer ref={ref => this.timer = ref} style={styles.timer} disabledStyle={styles.disabled} />
+          <Text style={styles.error_styling}>{this.state.moveLeft}</Text>
           <Touchable disabled={!playing} onPress={this.onToggleEditing} >
             <Image style={[styles.icon, editing&&{tintColor: 'khaki'}, !playing && styles.disabled]} source={require('./app/images/edit.png')} />
           </Touchable>
@@ -188,6 +192,7 @@ class Main extends Component {
     });
   }
 
+ 
   onErrorMove = () => {
     this.error++;
     if (this.error > 3){
@@ -200,9 +205,10 @@ class Main extends Component {
     const message = this.error > 3 ? I18n.t('fail') : I18n.t('errormove', {error: this.error});
 
         Alert.alert(I18n.t('wrong'), message, [
-            { text: I18n.t('ok') },
+            { text: I18n.t('ok')},
             { text: I18n.t('newgame'), onPress: this.onCreate },
           ]);
+    this.setState({ moveLeft: this.state.moveLeft - 1 })      
 
     }
   }
@@ -474,6 +480,17 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     color: '#fff',
     opacity: 1,
+  },
+  error_styling:{
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: '#fff',
+    color: '#fff',
+    backgroundColor : 'cadetblue',
+    padding : 2,
+    fontSize: CellSize * 3 / 4,
+    textAlign: 'center',
+    margin: 10
   },
   modal: {
     flex: 1,
