@@ -121,8 +121,8 @@ class Board extends Component {
       let nextPuzzle = this.puzzle.slice();
       nextPuzzle[index] = number;
       if (!sudoku.solvepuzzle(nextPuzzle)) {
+         this.props.onErrorMove();
         stack.moveBack(() => {
-          this.props.onErrorMove && this.props.onErrorMove();
         });
         return;
       }

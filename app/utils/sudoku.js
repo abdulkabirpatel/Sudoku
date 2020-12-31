@@ -26,9 +26,10 @@ function makepuzzle(board) {
 
 	shuffleArray(puzzle);
 
-	for (var i = puzzle.length - 1; i >= 0; i--) {
+	for (var i = puzzle.length -60; i >= 0; i--) {
 		var e = puzzle[i];
 		removeElement(puzzle, i);
+		console.log(puzzle.length);
 
 		var rating = checkpuzzle(boardforentries(puzzle), board);
 		if (rating == -1) {

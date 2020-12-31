@@ -16,12 +16,13 @@ I18n.translations = {
     rank: 'You are at %{rank}',
 
     ok: 'Got it',
-    congrats: 'Congrats',
+    congrats: 'Congratulation',
     nosolve: 'No solve after this move',
     wrong :'Wrong Move',
+    nomove:'No Moves Left',
     success: 'You solve this game in\n',
     fail: 'You lose this game.',
-    errormove: '%{error} worng move(Only 3 allowed)',
+    errormove: '%{error} wrong move(Only 3 allowed)',
     newrecord: 'New record! You solve this game in\n',
 
     uploadrecord: 'Send you record to the server?',

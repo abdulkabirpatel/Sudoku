@@ -119,7 +119,7 @@ class Main extends Component {
           <View style={styles.modal} >
             <View style={[styles.modalContainer, {marginTop: showOnline? -onlineHeight:0}]} >
               {!showRecord&&<Text style={styles.title} >{I18n.t('name')}</Text>}
-              {!showRecord&&<Text style={styles.about} >By Anand Gaming</Text>}
+              {!showRecord&&<Text style={styles.about} >By Anand InfoTech</Text>}
               <Touchable disabled={disabled} style={styles.button} onPress={this.onResume} >
                 <Image style={[styles.buttonIcon, disabled && styles.disabled]} source={require('./app/images/play.png')} />
                 <Text style={[styles.buttonText, disabled && styles.disabled]} >{I18n.t('continue')}</Text>
@@ -198,7 +198,7 @@ class Main extends Component {
     if (this.error > 3){
     const message = this.error > 3 ? I18n.t('fail') : I18n.t('errormove', {error: this.error});
 
-        Alert.alert(I18n.t('nosolve'), message, [
+        Alert.alert(I18n.t('nomove'), message, [
             { text: I18n.t('newgame'), onPress: this.onCreate },
           ]);
     }else{
@@ -213,9 +213,10 @@ class Main extends Component {
     }
   }
 
-  onFinish = () => {
+  onFinish = () => {    
     this.setState({
       playing: false,
+      moveLeft: 3
     });
     Store.multiRemove('puzzle', 'solve', 'error', 'elapsed');
     this.elapsed = null;
@@ -290,6 +291,7 @@ class Main extends Component {
       showOnline: false,
     });
   }
+ 
 
   onCreate = () => {
     this.elapsed = null;
@@ -312,6 +314,7 @@ class Main extends Component {
       showModal: false,
       showRecord: false,
       showOnline: false,
+      moveLeft: 3
     }, async() => {
       await Store.multiRemove('puzzle', 'solve', 'error', 'elapsed');
       this.puzzle = puzzle.slice();
